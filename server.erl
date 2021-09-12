@@ -65,19 +65,8 @@ handle_call({withdraw, AccountId, Amount}, _From, #state{
                                                           _-> {reply, {error, insufficient_funds}, State}
                                                       end;
 
+%% Prevent mem leaks from error msg overflows
+handle_call(_Msg, _From, State) ->
+    {reply, undefined, State}.
 
 
-        {deposit, AccID, Amt} ->
-            CurrentBalance = case dict:find(AccID, Accounts) of
-                                 error -> 0;
-                                 {ok, Amt0} -> Amt0
-                             end,
-            Accounts1 = dict:store(
-                            AccID,
-                            CurrentBalance + Amt,
-                            Accounts
-                        ),
-            io:format("---> ~p deposited ~p.~n", [AccID, Amt]),
-            loop(Accounts1);
-        terminate -> io:format("---> Exiting program...~n")
-    end.
