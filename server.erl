@@ -69,4 +69,22 @@ handle_call({withdraw, AccountId, Amount}, _From, #state{
 handle_call(_Msg, _From, State) ->
     {reply, undefined, State}.
 
+handle_cast(_Msg, State) ->
+    {noreply, State}.
 
+handle_info(_Info, State) ->
+    {noreply, State}.
+
+terminate(_Reason, _State) ->
+    io:format("---> Closing program....~n"),
+    terminated.
+
+%% Hot code swapping
+code_change(_OldVsn, State, _Extra) ->
+    {ok, State}.
+
+get_current_balance(AccountId, Accounts) ->
+    case dict:find(AccountId, Accounts) of
+        error -> 0;
+        {ok, Amount0} -> Amount0
+    end.
