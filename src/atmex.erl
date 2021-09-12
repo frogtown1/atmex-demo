@@ -1,4 +1,4 @@
--module(server).
+-module(atmex).
 -behaviour(gen_server).
 
 -export([start_link/0, stop/0]).

@@ -1,4 +1,4 @@
--module(superv).
+-module(atmex_sup).
 -behavior(supervisor).
 
 -export([start_link/0]).
