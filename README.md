@@ -1,1 +1,2 @@
-wip
+ # Usuage
+`erl -pa ebin`
